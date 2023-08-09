@@ -33,5 +33,13 @@ pip3 install -r requirements.txt
 python -m uvicorn main:app --reload 
 ```
 
-
-
+### 接口调用
+详情可查看 `chat.py` 文件
+```javascript
+# 调用初始化pdf向量化接口
+http://127.0.0.1:8000/chat/init_pdf
+```
+```javascript
+# 调用问答接口
+http://127.0.0.1:8000/chat/question
+```
