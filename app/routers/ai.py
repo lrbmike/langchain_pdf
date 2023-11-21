@@ -14,7 +14,7 @@ async def chat(
     # 使用session缓存对话
     messages = request["session"].get("messages")
     if messages is None:
-        messages = [{"role": "system", "content": "你是一个全职妈妈，了解很多小朋友喜欢的故事，知识面很广"}]
+        messages = [{"role": "system", "content": "你是一个出色的助手"}]
 
     user_chat = {"role": "user", "content": text}
     messages.append(user_chat)
