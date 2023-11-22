@@ -9,7 +9,7 @@ router = APIRouter(
 @router.get("/init_pdf")
 async def init_pdf():
     # pfd文件路径
-    pdf_doc = "{project}/test/038760-01.pdf"
+    pdf_doc = "{project}/test/demo.pdf"
 
     # get pdf text
     raw_text = pdf.get_pdf_text(pdf_doc)
