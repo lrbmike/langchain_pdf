@@ -1,16 +1,12 @@
 from fastapi import FastAPI, Request
 # session中间件
 from starlette.middleware.sessions import SessionMiddleware
-from app.routers import chat, ai
+from app.routers import chat
 import sys
 import os
-from dotenv import load_dotenv, find_dotenv
-import openai
 
+from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
-openai.api_key = os.getenv("OPENAI_API_KEY")
-openai.api_base = os.getenv("OPENAI_API_BASE")
-# openai.proxy = os.getenv("OPENAI_PROXY")
 
 # 防止相对路径导入出错
 sys.path.append(os.path.join(os.path.dirname(__file__)))
@@ -31,4 +27,3 @@ async def some_middleware(request: Request, call_next):
 
 # 将其余单独模块进行整合
 app.include_router(chat.router)
-app.include_router(ai.router)

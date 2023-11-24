@@ -1,35 +1,22 @@
 from fastapi import APIRouter, Body, Request
-from ..util import pdf, langchain, fass
+
+from app.tool.llm import LlmEngine
+from app.tool.store import FaissEngine
 
 router = APIRouter(
     prefix="/chat"
 )
-
-# 初始化pdf文件
-@router.get("/init_pdf")
-async def init_pdf():
-    # pfd文件路径
-    pdf_doc = "{project}/test/demo.pdf"
-
-    # get pdf text
-    raw_text = pdf.get_pdf_text(pdf_doc)
-
-    # get the text chunks
-    text_chunks = langchain.get_text_chunks(raw_text)
-
-    # save
-    fass.save_vector_store(text_chunks)
-
-    return {'success': True}
 
 
 @router.post("/question")
 async def question(
         text: str = Body(embed=True)
 ):
-    vector_store = fass.load_vector_store()
+    faiss = FaissEngine()
+    vector_store = faiss.load_vector_store()
 
-    chain = langchain.get_qa_chain(vector_store)
+    llm = LlmEngine()
+    chain = llm.get_qa_chain(vector_store)
 
     response = chain({"query": text})
     # reply = "回复:"
@@ -41,9 +28,11 @@ async def question_history(
         request: Request,
         text: str = Body(embed=True)
 ):
-    vector_store = fass.load_vector_store()
+    faiss = FaissEngine()
+    vector_store = faiss.load_vector_store()
 
-    chain = langchain.get_history_chain(vector_store)
+    llm = LlmEngine()
+    chain = llm.get_history_chain(vector_store)
 
     # 使用session缓存对话
     chat_history = request["session"].get("chat_history")
