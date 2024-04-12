@@ -45,6 +45,3 @@ python -m uvicorn main:app --reload
 # 调用问答接口
 http://127.0.0.1:8000/chat/question
 ```
-
-### 文章详细介绍
-[传送门](https://blog.csdn.net/lrb0677/article/details/132198025)
